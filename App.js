@@ -1,20 +1,43 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { StatusBar } from "expo-status-bar";
+import { SafeAreaView, StyleSheet, View, ScrollView, Text } from "react-native";
+import Header from "./components/Header";
+import Balance from "./components/Balance";
+import ActionsGrid from "./components/ActionsGrid";
+import Transactions from "./components/Transactions";
+import BottomNav from "./components/BottomNav";
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaView style={styles.safe}>
+      <StatusBar style="light" />
+      <View style={styles.bgDecorative} />
+      <ScrollView
+        contentContainerStyle={styles.container}
+        showsVerticalScrollIndicator={false}
+      >
+        <Header />
+        <Balance />
+        <ActionsGrid />
+        <View style={{ height: 8 }} />
+        <Transactions />
+        <View style={{ height: 120 }} />
+      </ScrollView>
+      <BottomNav />
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  safe: { flex: 1, backgroundColor: "#102219" },
+  container: { paddingBottom: 40 },
+  bgDecorative: {
+    position: "absolute",
+    top: -120,
+    left: -80,
+    width: 400,
+    height: 400,
+    borderRadius: 200,
+    backgroundColor: "rgba(19,236,128,0.06)",
   },
 });

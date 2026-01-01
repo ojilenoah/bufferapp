@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Minimalist Hybrid Banking Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec80",
+                        "background-light": "#f6f8f7",
+                        "background-dark": "#102219",
+                        "glass-surface": "rgba(255, 255, 255, 0.03)",
+                        "glass-border": "rgba(255, 255, 255, 0.08)",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Glassmorphism Utilities */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .glass-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.12); /* Slightly more visible border as requested */
+            box-shadow: 0 4px 24px -2px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:active {
+            transform: scale(0.98);
+            border-color: rgba(19, 236, 128, 0.3);
+            box-shadow: 0 0 15px rgba(19, 236, 128, 0.1);
+        }
+
+        .glass-nav {
+            background: rgba(16, 34, 25, 0.85);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* Mint glow effect for text */
+        .text-glow {
+            text-shadow: 0 0 25px rgba(19, 236, 128, 0.4);
+        }
+        
+        /* Utility for hiding scrollbar but keeping functionality */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display antialiased min-h-screen flex flex-col relative overflow-hidden selection:bg-primary selection:text-background-dark">
+<!-- Ambient Background Effects (Blobs for depth) -->
+<div class="fixed top-0 left-0 right-0 h-[60vh] bg-primary/10 blur-[130px] rounded-full pointer-events-none -translate-y-1/2 z-0"></div>
+<div class="fixed bottom-0 left-0 w-[80%] h-[400px] bg-primary/5 blur-[100px] rounded-full pointer-events-none translate-y-1/2 -translate-x-1/4 z-0"></div>
+<!-- Main Content Wrapper -->
+<div class="relative z-10 flex-1 flex flex-col max-w-md mx-auto w-full pb-28">
+<!-- Top App Bar -->
+<header class="flex items-center justify-between px-6 pt-10 pb-4">
+<div class="flex items-center gap-3">
+<div class="relative group cursor-pointer">
+<div class="w-11 h-11 rounded-full overflow-hidden border border-white/20 ring-2 ring-transparent group-hover:ring-primary/30 transition-all">
+<img alt="User avatar portrait" class="w-full h-full object-cover" data-alt="User avatar portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDg1_isMrqZPkdx_bwvuf9Gpv1BT22dq27Yh6BZGx-VQPCTkDbzto4iCrJ0FiCrh1LSNlf5lH_8M24cmqdgK8LPQ101o3QVrZt5VshsEfp5Wk0qHgOYBA48-G4PLxXQENg85l5DJpkOAzfhIJRSmRIDZ19msYkpeirFXjeXsRCIpstBlj-bjHL2YvWP7LOXYn2YIISIJ1DjSSjP0L4c8WE5i79A8PFUn-fDyyXdOfs1qukuTE28Axo2dzkoMOhIi3F1X-3Ry1hqXGuy"/>
+</div>
+</div>
+<div>
+<p class="text-xs text-primary/80 font-medium tracking-wide">Good evening,</p>
+<p class="text-base font-bold text-white tracking-tight">Alex Sterling</p>
+</div>
+</div>
+<button class="w-11 h-11 rounded-xl glass-panel flex items-center justify-center text-white hover:bg-white/10 transition-colors relative active:scale-95">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0, 'wght' 400;">notifications</span>
+<span class="absolute top-3 right-3.5 w-2 h-2 bg-primary rounded-full animate-pulse shadow-[0_0_8px_rgba(19,236,128,0.8)]"></span>
+</button>
+</header>
+<!-- Balance Section -->
+<div class="px-6 py-6 text-center relative">
+<p class="text-white/60 text-sm font-medium mb-2">Total Fiat Balance</p>
+<h1 class="text-[40px] leading-tight font-bold text-white tracking-tight text-glow mb-2">$14,230<span class="text-white/40 text-2xl font-semibold">.50</span></h1>
+<!-- Trend Indicator -->
+<div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm">
+<span class="material-symbols-outlined text-primary text-sm font-bold">trending_up</span>
+<span class="text-xs font-medium text-primary tracking-wide">+2.4% this week</span>
+</div>
+</div>
+<!-- Action Buttons (Quick Actions) -->
+<div class="px-6 py-4">
+<div class="grid grid-cols-4 gap-3">
+<!-- Send -->
+<button class="flex flex-col items-center gap-2 group w-full">
+<div class="w-14 h-14 rounded-2xl bg-primary text-background-dark flex items-center justify-center shadow-[0_0_20px_rgba(19,236,128,0.3)] hover:shadow-[0_0_30px_rgba(19,236,128,0.5)] hover:-translate-y-1 transition-all duration-300">
+<span class="material-symbols-outlined text-2xl font-semibold">arrow_upward</span>
+</div>
+<span class="text-xs font-semibold text-white/90 group-hover:text-primary transition-colors">Send</span>
+</button>
+<!-- Request -->
+<button class="flex flex-col items-center gap-2 group w-full">
+<div class="w-14 h-14 rounded-2xl glass-panel text-white flex items-center justify-center hover:bg-white/10 hover:border-primary/40 hover:-translate-y-1 transition-all duration-300 border border-white/15">
+<span class="material-symbols-outlined text-2xl">arrow_downward</span>
+</div>
+<span class="text-xs font-semibold text-white/90 group-hover:text-white transition-colors">Request</span>
+</button>
+<!-- Exchange -->
+<button class="flex flex-col items-center gap-2 group w-full">
+<div class="w-14 h-14 rounded-2xl glass-panel text-white flex items-center justify-center hover:bg-white/10 hover:border-primary/40 hover:-translate-y-1 transition-all duration-300 border border-white/15">
+<span class="material-symbols-outlined text-2xl">currency_exchange</span>
+</div>
+<span class="text-xs font-semibold text-white/90 group-hover:text-white transition-colors">Swap</span>
+</button>
+<!-- More -->
+<button class="flex flex-col items-center gap-2 group w-full">
+<div class="w-14 h-14 rounded-2xl glass-panel text-white flex items-center justify-center hover:bg-white/10 hover:border-primary/40 hover:-translate-y-1 transition-all duration-300 border border-white/15">
+<span class="material-symbols-outlined text-2xl">more_horiz</span>
+</div>
+<span class="text-xs font-semibold text-white/90 group-hover:text-white transition-colors">More</span>
+</button>
+</div>
+</div>
+<!-- Transactions Section -->
+<div class="flex-1 px-6 pt-4 flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<h3 class="text-lg font-bold text-white tracking-wide">Recent Activity</h3>
+<button class="p-2 -mr-2 text-primary hover:text-white transition-colors rounded-lg hover:bg-white/5">
+<span class="material-symbols-outlined">filter_list</span>
+</button>
+</div>
+<!-- Transaction List Container -->
+<div class="flex flex-col gap-3">
+<!-- Card 1: Completed Expense -->
+<div class="glass-card p-4 rounded-xl flex items-center justify-between group cursor-pointer relative overflow-hidden">
+<!-- Subtle hover glow effect -->
+<div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 transform -translate-x-full group-hover:translate-x-full transition-all duration-700 pointer-events-none"></div>
+<div class="flex items-center gap-4 z-10">
+<div class="w-11 h-11 rounded-xl bg-white/5 flex items-center justify-center text-white border border-white/10 shadow-inner">
+<span class="material-symbols-outlined text-xl">coffee</span>
+</div>
+<div>
+<h4 class="text-sm font-bold text-white tracking-tight">Starbucks Coffee</h4>
+<div class="flex items-center gap-1.5 mt-1">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+<p class="text-[11px] font-medium text-white/50">Today, 9:41 AM</p>
+</div>
+</div>
+</div>
+<div class="text-right z-10">
+<p class="text-[15px] font-bold text-white tracking-tight">-$5.50</p>
+<span class="text-[10px] font-semibold text-white/40 uppercase tracking-wider">Debit</span>
+</div>
+</div>
+<!-- Card 2: Income / Deposit -->
+<div class="glass-card p-4 rounded-xl flex items-center justify-between group cursor-pointer border-primary/20 relative overflow-hidden">
+<div class="flex items-center gap-4 z-10">
+<div class="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center text-primary border border-primary/20 shadow-[0_0_15px_rgba(19,236,128,0.1)]">
+<span class="material-symbols-outlined text-xl">account_balance_wallet</span>
+</div>
+<div>
+<h4 class="text-sm font-bold text-white tracking-tight">Salary Deposit</h4>
+<div class="flex items-center gap-1.5 mt-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_6px_#13ec80]"></span>
+<p class="text-[11px] font-medium text-white/50">Yesterday</p>
+</div>
+</div>
+</div>
+<div class="text-right z-10">
+<p class="text-[15px] font-bold text-primary tracking-tight">+$2,000.00</p>
+<span class="inline-block px-1.5 py-0.5 rounded text-[10px] font-bold bg-primary/10 text-primary mt-0.5 border border-primary/20">COMPLETED</span>
+</div>
+</div>
+<!-- Card 3: Pending Person -->
+<div class="glass-card p-4 rounded-xl flex items-center justify-between group cursor-pointer border-l-2 border-l-amber-400/60 border-y border-r border-y-white/10 border-r-white/10">
+<div class="flex items-center gap-4">
+<div class="w-11 h-11 rounded-xl overflow-hidden border border-white/10 relative">
+<img alt="Profile of Alice" class="w-full h-full object-cover opacity-90" data-alt="Profile of Alice" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2i3t83IKZ6Ok9uzC69mwuMAqxBtYv6C-5aINhbBbh_ZzikAGJo8IeQTk01sbzLKbE-j1LrrWSY-wEj6A0C5I1kjDL7ZY4Q1TFh9Phms6B24z5sQsaKw5yArVIVxsUQ_O7mqax_oXcyciCrENI9ZOMGGDNNGDA9Ae0YM-Pu7xg8rUU4XEle_79Zsnuw6CeG8r4ngbyogXmMgXUN3pXRpBFBOkEt9g6rvLFrCv4vDrD4tlhdYNslW_Gpi3Fl8u2U26xLhNQZEteRk8O"/>
+</div>
+<div>
+<h4 class="text-sm font-bold text-white tracking-tight">Alice M.</h4>
+<div class="flex items-center gap-1.5 mt-1">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
+<p class="text-[11px] font-medium text-amber-400/90">Pending Auth</p>
+</div>
+</div>
+</div>
+<div class="text-right">
+<p class="text-[15px] font-bold text-white tracking-tight">-$50.00</p>
+<span class="text-[10px] font-semibold text-white/40 uppercase tracking-wider">Transfer</span>
+</div>
+</div>
+<!-- Card 4: Service -->
+<div class="glass-card p-4 rounded-xl flex items-center justify-between group cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="w-11 h-11 rounded-xl bg-white/5 flex items-center justify-center text-white border border-white/10">
+<span class="material-symbols-outlined text-xl">local_taxi</span>
+</div>
+<div>
+<h4 class="text-sm font-bold text-white tracking-tight">Uber Ride</h4>
+<div class="flex items-center gap-1.5 mt-1">
+<span class="w-1.5 h-1.5 rounded-full bg-white/20"></span>
+<p class="text-[11px] font-medium text-white/50">Aug 22</p>
+</div>
+</div>
+</div>
+<div class="text-right">
+<p class="text-[15px] font-bold text-white tracking-tight">-$24.50</p>
+<span class="text-[10px] font-semibold text-white/40 uppercase tracking-wider">Debit</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 right-0 z-50">
+<!-- Gradient Fade for smooth transition -->
+<div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#102219] via-[#102219]/90 to-transparent pointer-events-none"></div>
+<!-- Glass Container -->
+<div class="relative w-full max-w-md mx-auto px-4 pb-6 pt-2">
+<div class="glass-nav h-[72px] rounded-2xl flex items-center justify-around px-2 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.8)] border border-white/5">
+<button class="flex flex-col items-center justify-center w-14 h-full gap-1.5 group">
+<div class="relative">
+<span class="material-symbols-outlined text-[26px] text-primary group-hover:drop-shadow-[0_0_8px_rgba(19,236,128,0.5)] transition-all" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-primary rounded-full"></span>
+</div>
+<span class="text-[10px] font-semibold text-white group-hover:text-primary transition-colors">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center w-14 h-full gap-1.5 group">
+<span class="material-symbols-outlined text-[26px] text-white/40 group-hover:text-white transition-all">credit_card</span>
+<span class="text-[10px] font-medium text-white/40 group-hover:text-white transition-colors">Cards</span>
+</button>
+<!-- Center FAB Spacer/Icon -->
+<button class="flex flex-col items-center justify-center w-14 h-full gap-1.5 group">
+<div class="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center border border-white/10 group-hover:bg-primary/20 group-hover:border-primary/30 transition-all">
+<span class="material-symbols-outlined text-[24px] text-white/60 group-hover:text-primary transition-colors">sync_alt</span>
+</div>
+</button>
+<button class="flex flex-col items-center justify-center w-14 h-full gap-1.5 group">
+<span class="material-symbols-outlined text-[26px] text-white/40 group-hover:text-white transition-all">pie_chart</span>
+<span class="text-[10px] font-medium text-white/40 group-hover:text-white transition-colors">Activity</span>
+</button>
+<button class="flex flex-col items-center justify-center w-14 h-full gap-1.5 group">
+<span class="material-symbols-outlined text-[26px] text-white/40 group-hover:text-white transition-all">settings</span>
+<span class="text-[10px] font-medium text-white/40 group-hover:text-white transition-colors">Settings</span>
+</button>
+</div>
+</div>
+</nav>
+</body></html>

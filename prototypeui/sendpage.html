@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Send Money - Enter Details</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec80",
+                        "background-light": "#f6f8f7",
+                        "background-dark": "#102219",
+                        "glass-surface": "rgba(255, 255, 255, 0.03)",
+                        "glass-border": "rgba(255, 255, 255, 0.08)",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                    }
+                },
+            },
+        }
+    </script>
+<style>.glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+        .glass-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.12);box-shadow: 0 4px 24px -2px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        .glass-card:active, .glass-card:focus-within {
+            border-color: rgba(19, 236, 128, 0.5);
+            box-shadow: 0 0 20px rgba(19, 236, 128, 0.15);
+        }
+        .glass-nav {
+            background: rgba(16, 34, 25, 0.85);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }.text-glow {
+            text-shadow: 0 0 25px rgba(19, 236, 128, 0.4);
+        }.no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display antialiased min-h-screen flex flex-col relative overflow-hidden selection:bg-primary selection:text-background-dark">
+<div class="fixed top-0 left-0 right-0 h-[60vh] bg-primary/10 blur-[130px] rounded-full pointer-events-none -translate-y-1/2 z-0"></div>
+<div class="fixed bottom-0 left-0 w-[80%] h-[400px] bg-primary/5 blur-[100px] rounded-full pointer-events-none translate-y-1/2 -translate-x-1/4 z-0"></div>
+<div class="relative z-10 flex-1 flex flex-col max-w-md mx-auto w-full pb-28">
+<header class="flex items-center justify-between px-6 pt-10 pb-4">
+<button class="w-10 h-10 rounded-full glass-panel flex items-center justify-center text-white hover:bg-white/10 transition-colors active:scale-95 group">
+<span class="material-symbols-outlined group-hover:-translate-x-0.5 transition-transform" style="font-variation-settings: 'wght' 500;">arrow_back</span>
+</button>
+<h1 class="text-lg font-bold text-white tracking-tight">Send Money</h1>
+<button class="w-10 h-10 flex items-center justify-center text-white/60 hover:text-white transition-colors">
+<span class="material-symbols-outlined">help</span>
+</button>
+</header>
+<div class="px-6 py-4 flex flex-col gap-6">
+<div class="flex flex-col gap-2">
+<label class="text-xs font-semibold text-primary/80 uppercase tracking-wider ml-1">Destination</label>
+<button class="glass-card w-full p-4 rounded-2xl flex items-center justify-between group active:scale-[0.98]">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full overflow-hidden border border-white/20 shadow-md relative">
+<div class="absolute inset-0 bg-[#003399] flex items-center justify-center">
+<span class="text-[8px] text-white">🇪🇺</span>
+</div>
+<img alt="Euro Flag" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwSSs0wFQt_RnNR5exocirEo_YMoXzwrWCyKKXJQ__vnzxd3wcQBw0i6qKtGCzwbsoFy0r4QUKmxwg4GgAH5X-0G4c_c1WDasJEtYP8kpN51VVCHOUzgvBFB5c4q7JmdUSvZVhPcY_GYrankvcR0TkEjQqlW8r_KwdFS1kW420RXPNK_a4LvrLC11intRyFQHP1jBCddzj1ievdpxkSqrQREDKWv1UAdtSgJqkNU1mobSxZsNj_SmUJNccpHK2Jiw_Sa09jlpx9rTF"/>
+</div>
+<div class="text-left">
+<p class="text-white font-bold text-[15px]">European Union</p>
+<p class="text-white/50 text-xs font-medium">Euro (EUR)</p>
+</div>
+</div>
+<div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center border border-white/5 group-hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined text-white/70">expand_more</span>
+</div>
+</button>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-xs font-semibold text-primary/80 uppercase tracking-wider ml-1">Amount</label>
+<div class="glass-card rounded-2xl p-5 relative overflow-hidden group focus-within:ring-1 focus-within:ring-primary/50">
+<div class="absolute -right-10 -top-10 w-32 h-32 bg-primary/10 blur-[50px] rounded-full pointer-events-none"></div>
+<div class="flex items-center justify-between relative z-10">
+<div class="flex flex-col">
+<span class="text-xs text-white/50 font-medium mb-1">You send</span>
+<div class="flex items-baseline gap-1">
+<span class="text-2xl font-bold text-primary">$</span>
+<input class="bg-transparent border-none text-4xl font-bold text-white p-0 w-40 focus:ring-0 placeholder-white/20 selection:bg-primary/30" placeholder="0.00" type="number" value="1250.00"/>
+</div>
+</div>
+<button class="flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl px-3 py-2 transition-all">
+<img alt="US Flag" class="w-5 h-5 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuACfUkS4jaNytQnnB9WqlFAESD4w8pz0DzKoaz-lJJlO6c7BA1UxJm1VUBC_vp9uWuutKvIcc6MwSpPKH6A3PCkJcarQH4dyUu0SLhVHuePSTE2of6hHrBl6VLOY_SjnPhWtvOj3ct1WcOWKdBPsPLp9ci3jhr7TMgp4RKsNrwthX5ZTv_lANpPnLpgkCwF9WTsi5ugvNhB5bvZLgkfju77GORLqCThP928EkqNQgcSm2wzHCw1fU1EQ_b0GunnIdnYCtOPIZHYhHVx"/>
+<span class="text-sm font-bold text-white">USD</span>
+<span class="material-symbols-outlined text-xs text-white/50">expand_more</span>
+</button>
+</div>
+</div>
+<div class="px-2 flex items-center justify-between">
+<div class="flex items-center gap-1.5 text-white/60">
+<span class="material-symbols-outlined text-[14px]">currency_exchange</span>
+<span class="text-xs font-medium tracking-wide">1 USD ≈ 0.92 EUR</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="text-xs text-white/40">Recipient gets:</span>
+<span class="text-sm font-bold text-primary tracking-tight">€1,150.00</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-2 pt-2">
+<label class="text-xs font-semibold text-primary/80 uppercase tracking-wider ml-1">Recipient Account</label>
+<div class="glass-card rounded-2xl p-1 flex items-center">
+<div class="pl-4 pr-2">
+<span class="material-symbols-outlined text-white/40">account_balance</span>
+</div>
+<input class="w-full bg-transparent border-none text-white text-[15px] p-4 focus:ring-0 placeholder-white/30 font-medium tracking-wide" placeholder="IBAN / Account Number" type="text"/>
+<button class="mr-2 p-2 rounded-lg text-primary hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-[20px]">qr_code_scanner</span>
+</button>
+</div>
+<p class="text-[10px] text-white/40 px-2">Please ensure the IBAN is correct to avoid delays.</p>
+</div>
+</div>
+<div class="px-6 mt-auto">
+<button class="w-full bg-primary text-background-dark font-bold text-lg py-4 rounded-2xl shadow-[0_0_20px_rgba(19,236,128,0.3)] hover:shadow-[0_0_30px_rgba(19,236,128,0.5)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 flex items-center justify-center gap-2">
+<span>Continue</span>
+<span class="material-symbols-outlined text-xl">arrow_forward</span>
+</button>
+</div>
+</div>
+<nav class="fixed bottom-0 left-0 right-0 z-50">
+<div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#102219] via-[#102219]/90 to-transparent pointer-events-none"></div>
+<div class="relative w-full max-w-md mx-auto px-4 pb-6 pt-2">
+<div class="glass-nav h-[72px] rounded-2xl flex items-center justify-around px-2 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.8)] border border-white/5">
+<button class="flex flex-col items-center justify-center w-14 h-full gap-1.5 group">
+<span class="material-symbols-outlined text-[26px] text-white/40 group-hover:text-white transition-all">home</span>
+<span class="text-[10px] font-medium text-white/40 group-hover:text-white transition-colors">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center w-14 h-full gap-1.5 group">
+<span class="material-symbols-outlined text-[26px] text-white/40 group-hover:text-white transition-all">credit_card</span>
+<span class="text-[10px] font-medium text-white/40 group-hover:text-white transition-colors">Cards</span>
+</button>
+<button class="flex flex-col items-center justify-center w-14 h-full gap-1.5 group">
+<div class="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center border border-primary/30 shadow-[0_0_10px_rgba(19,236,128,0.2)]">
+<span class="material-symbols-outlined text-[24px] text-primary">sync_alt</span>
+</div>
+</button>
+<button class="flex flex-col items-center justify-center w-14 h-full gap-1.5 group">
+<span class="material-symbols-outlined text-[26px] text-white/40 group-hover:text-white transition-all">pie_chart</span>
+<span class="text-[10px] font-medium text-white/40 group-hover:text-white transition-colors">Activity</span>
+</button>
+<button class="flex flex-col items-center justify-center w-14 h-full gap-1.5 group">
+<span class="material-symbols-outlined text-[26px] text-white/40 group-hover:text-white transition-all">settings</span>
+<span class="text-[10px] font-medium text-white/40 group-hover:text-white transition-colors">Settings</span>
+</button>
+</div>
+</div>
+</nav>
+
+</body></html>
