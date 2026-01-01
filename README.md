@@ -25,3 +25,4 @@ The biggest culprits:
 3. Avoid "kitchen sink" UI libraries
 4. Keep images optimized
 5. Run `npx expo install` for Expo packages (ensures compatibility)
+"# bufferapp" 
