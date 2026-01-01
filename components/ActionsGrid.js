@@ -2,9 +2,13 @@ import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 
-function Action({ icon, label, primary }) {
+function Action({ icon, label, primary, onPress }) {
   return (
-    <TouchableOpacity style={styles.action} activeOpacity={0.7}>
+    <TouchableOpacity
+      style={styles.action}
+      activeOpacity={0.7}
+      onPress={onPress}
+    >
       <View style={[styles.iconWrap, primary && styles.primaryBg]}>
         <MaterialIcons
           name={icon}
@@ -17,11 +21,16 @@ function Action({ icon, label, primary }) {
   );
 }
 
-export default function ActionsGrid() {
+export default function ActionsGrid({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.row}>
-        <Action icon="arrow-upward" label="Send" primary />
+        <Action
+          icon="arrow-upward"
+          label="Send"
+          primary
+          onPress={() => navigation && navigation.navigate("Send")}
+        />
         <Action icon="arrow-downward" label="Request" />
         <Action icon="currency-exchange" label="Swap" />
         <Action icon="more-horiz" label="More" />

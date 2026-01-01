@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Transaction Receipt</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec80",
+                        "background-light": "#f6f8f7",
+                        "background-dark": "#102219", // Darker jungle green/black as requested
+                        "glass-border": "rgba(255, 255, 255, 0.08)",
+                        "glass-bg": "rgba(255, 255, 255, 0.03)",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "0.75rem", "xl": "1rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom Glassmorphism Utilities not native to Tailwind v3 standard config without plugins */
+        .glass-panel {
+            background: var(--glass-bg, rgba(255, 255, 255, 0.03));
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.08));
+        }
+        
+        .glow-effect {
+            box-shadow: 0 0 40px -10px rgba(19, 236, 128, 0.3);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display antialiased text-slate-900 dark:text-white selection:bg-primary selection:text-background-dark">
+<div class="relative flex h-full min-h-screen w-full flex-col overflow-hidden max-w-md mx-auto shadow-2xl">
+<!-- Ambient Background Glow -->
+<div class="absolute top-[-10%] left-[-10%] w-[60%] h-[40%] bg-primary/10 rounded-full blur-[100px] pointer-events-none"></div>
+<div class="absolute bottom-[-10%] right-[-10%] w-[60%] h-[40%] bg-primary/5 rounded-full blur-[80px] pointer-events-none"></div>
+<!-- Top App Bar -->
+<div class="relative z-10 flex items-center justify-between p-4 pb-2">
+<button class="text-white/70 hover:text-white transition-colors flex size-10 items-center justify-center rounded-full hover:bg-white/5">
+<span class="material-symbols-outlined !text-[24px]">close</span>
+</button>
+<h2 class="text-white/90 text-sm font-semibold tracking-wide uppercase opacity-80">Transaction Receipt</h2>
+<div class="size-10"></div> <!-- Spacer for balance -->
+</div>
+<!-- Main Content Scrollable Area -->
+<div class="relative z-10 flex-1 flex flex-col items-center px-6 pt-8 pb-4 gap-8">
+<!-- Success Indicator & Amount -->
+<div class="flex flex-col items-center gap-6 w-full animate-fade-in-up">
+<div class="relative">
+<div class="absolute inset-0 bg-primary/20 blur-xl rounded-full"></div>
+<div class="relative flex items-center justify-center size-20 rounded-full bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/30 glow-effect">
+<span class="material-symbols-outlined !text-[40px] text-primary">check</span>
+</div>
+</div>
+<div class="flex flex-col items-center justify-center text-center gap-2">
+<p class="text-white text-2xl font-bold tracking-tight">Transfer Successful</p>
+<p class="text-white/60 text-sm font-medium">Oct 24, 2023 at 10:42 AM</p>
+</div>
+<div class="flex flex-col items-center">
+<span class="text-5xl font-bold text-white tracking-tight">$1,250.00</span>
+<span class="text-primary text-sm font-medium mt-2 bg-primary/10 px-3 py-1 rounded-full border border-primary/20">Sent to Alex Johnson</span>
+</div>
+</div>
+<!-- Glass Card Details -->
+<div class="w-full glass-panel rounded-xl p-5 flex flex-col gap-4 mt-2">
+<h3 class="text-xs font-bold text-white/40 uppercase tracking-widest mb-1 pl-1">Transaction Details</h3>
+<!-- Recipient Row -->
+<div class="flex items-center justify-between py-2 border-b border-white/5">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-white/10 flex items-center justify-center text-white overflow-hidden" data-alt="Alex Johnson Profile Picture" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAurBuUbiz7lusDXQkpTWQgMvyTLq1P00IEg0a9rqlNsVGsA3isX4_93vVlDa-QwOCCtVJWi_wcQWPjmrWX_2vBlibNgvJou55fpVRBwaK3tbhZ3uxEd4_HfHnnI8c3MSmJl70y3jOzt9nlQWaE44ZBMcZ4_mgX1OuzOOnoG4A5fM1KXKOrCeHatDNzIN0Hi347YNNYjKFQuyIwPsVqsDx7Ibzo4WhK9VH0COhh9sk3AhmMqtWFYEikutjHuEt4sZ2VXwgT5MNZn17b'); background-size: cover;">
+</div>
+<div class="flex flex-col">
+<span class="text-xs text-primary/80">Recipient</span>
+<span class="text-sm font-semibold text-white">Alex Johnson</span>
+</div>
+</div>
+</div>
+<!-- Source Row -->
+<div class="flex items-center justify-between py-2 border-b border-white/5">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-white/5 flex items-center justify-center text-white/70 border border-white/10">
+<span class="material-symbols-outlined !text-[20px]">account_balance_wallet</span>
+</div>
+<div class="flex flex-col">
+<span class="text-xs text-primary/80">From</span>
+<span class="text-sm font-semibold text-white">Checking (...8842)</span>
+</div>
+</div>
+</div>
+<!-- Reference Row -->
+<div class="flex items-center justify-between py-2">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-white/5 flex items-center justify-center text-white/70 border border-white/10">
+<span class="material-symbols-outlined !text-[20px]">fingerprint</span>
+</div>
+<div class="flex flex-col">
+<span class="text-xs text-primary/80">Reference ID</span>
+<span class="text-sm font-semibold text-white font-mono tracking-wide">TXN-8849203</span>
+</div>
+</div>
+<button class="text-white/40 hover:text-white transition-colors p-2">
+<span class="material-symbols-outlined !text-[18px]">content_copy</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Footer Actions -->
+<div class="relative z-10 w-full p-6 pb-8 bg-background-dark/80 backdrop-blur-md border-t border-white/5 flex flex-col gap-3">
+<button class="group w-full flex items-center justify-center gap-2 h-12 rounded-lg bg-transparent border border-white/20 hover:bg-white/5 hover:border-white/40 text-white transition-all duration-200">
+<span class="material-symbols-outlined !text-[20px] group-hover:translate-y-0.5 transition-transform">download</span>
+<span class="text-sm font-bold">Download Receipt</span>
+</button>
+<button class="w-full flex items-center justify-center h-14 rounded-lg bg-primary hover:bg-[#10d673] text-background-dark text-base font-bold tracking-wide shadow-[0_0_20px_rgba(19,236,128,0.25)] hover:shadow-[0_0_30px_rgba(19,236,128,0.4)] transition-all duration-200 transform active:scale-[0.98]">
+                Done
+            </button>
+</div>
+</div>
+</body></html>

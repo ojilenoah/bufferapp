@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Send Money - Select Bank &amp; Confirm</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec80",
+                        "background-light": "#f6f8f7",
+                        "background-dark": "#102219", // Deep dark green/charcoal base
+                        "glass-surface": "rgba(255, 255, 255, 0.05)",
+                        "glass-border": "rgba(255, 255, 255, 0.1)",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.375rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Glassmorphism utility classes */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        .glass-panel-active {
+            background: rgba(19, 236, 128, 0.05); /* Tint with primary */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid #13ec80; /* Primary border */
+        }
+
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white antialiased selection:bg-primary selection:text-black">
+<div class="relative flex h-full min-h-screen w-full flex-col overflow-hidden max-w-md mx-auto shadow-2xl bg-gradient-to-b from-[#102219] to-[#0a1510]">
+<!-- Ambient Background Glows -->
+<div class="absolute top-[-10%] left-[-10%] w-64 h-64 bg-primary/10 rounded-full blur-[100px] pointer-events-none"></div>
+<div class="absolute bottom-[20%] right-[-10%] w-80 h-80 bg-primary/5 rounded-full blur-[100px] pointer-events-none"></div>
+<!-- Top App Bar -->
+<div class="relative z-10 flex items-center p-6 pt-12 pb-2 justify-between">
+<button class="text-white/80 hover:text-primary transition-colors flex size-10 shrink-0 items-center justify-center rounded-full glass-panel active:scale-95">
+<span class="material-symbols-outlined text-[20px]">arrow_back_ios_new</span>
+</button>
+<h2 class="text-white text-lg font-bold leading-tight tracking-tight flex-1 text-center pr-10">Select Institution</h2>
+</div>
+<!-- Content Body -->
+<div class="flex-1 flex flex-col relative z-10 overflow-y-auto px-6 pb-28">
+<!-- Context Summary -->
+<div class="mt-4 mb-8 text-center">
+<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel">
+<span class="material-symbols-outlined text-primary text-[18px]">account_balance_wallet</span>
+<p class="text-white/70 text-sm font-medium">Sending to account ending in •••• 4829</p>
+</div>
+</div>
+<!-- List Header -->
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-white/90 text-sm font-semibold uppercase tracking-wider">Suggested Banks</h3>
+<button class="text-primary text-xs font-medium hover:underline">See all</button>
+</div>
+<!-- Bank List -->
+<div class="flex flex-col gap-4">
+<!-- Card 1: Chase (Active State Example) -->
+<div class="group relative cursor-pointer transition-all duration-300 transform hover:scale-[1.02]">
+<div class="glass-panel-active rounded-xl p-4 flex items-center justify-between shadow-lg shadow-primary/5">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-white flex items-center justify-center overflow-hidden shrink-0">
+<!-- Placeholder logo -->
+<div class="w-full h-full bg-blue-900 flex items-center justify-center" data-alt="Chase Bank blue octagon logo">
+<span class="text-white font-bold text-xs">CHASE</span>
+</div>
+</div>
+<div class="flex flex-col">
+<p class="text-white text-base font-bold leading-tight">Chase Bank</p>
+<p class="text-primary text-xs font-medium mt-1">Checking •••• 1234</p>
+</div>
+</div>
+<div class="flex items-center justify-center size-6 rounded-full bg-primary text-black">
+<span class="material-symbols-outlined text-[16px] font-bold">check</span>
+</div>
+</div>
+</div>
+<!-- Card 2: Bank of America -->
+<div class="group relative cursor-pointer transition-all duration-300 transform hover:scale-[1.02]">
+<div class="glass-panel rounded-xl p-4 flex items-center justify-between hover:border-white/20">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-white flex items-center justify-center overflow-hidden shrink-0">
+<div class="w-full h-full bg-red-700 flex items-center justify-center" data-alt="Bank of America red and blue logo">
+<span class="text-white font-bold text-xs">BofA</span>
+</div>
+</div>
+<div class="flex flex-col">
+<p class="text-white text-base font-bold leading-tight">Bank of America</p>
+<p class="text-white/40 text-xs font-normal mt-1">Savings •••• 5678</p>
+</div>
+</div>
+<div class="hidden group-hover:flex items-center justify-center size-6 rounded-full border border-white/20">
+</div>
+</div>
+</div>
+<!-- Card 3: Wells Fargo -->
+<div class="group relative cursor-pointer transition-all duration-300 transform hover:scale-[1.02]">
+<div class="glass-panel rounded-xl p-4 flex items-center justify-between hover:border-white/20">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-white flex items-center justify-center overflow-hidden shrink-0">
+<div class="w-full h-full bg-yellow-600 flex items-center justify-center" data-alt="Wells Fargo yellow and red stagecoach logo">
+<span class="text-white font-bold text-xs">WF</span>
+</div>
+</div>
+<div class="flex flex-col">
+<p class="text-white text-base font-bold leading-tight">Wells Fargo</p>
+<p class="text-white/40 text-xs font-normal mt-1">Checking •••• 9012</p>
+</div>
+</div>
+<div class="hidden group-hover:flex items-center justify-center size-6 rounded-full border border-white/20">
+</div>
+</div>
+</div>
+</div>
+<!-- Recipient Found Section (Dynamic) -->
+<div class="mt-8 animate-fade-in-up">
+<div class="glass-panel rounded-xl p-5 border-l-4 border-l-primary flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<span class="text-xs font-semibold text-primary uppercase tracking-wide">Recipient Verified</span>
+<span class="material-symbols-outlined text-primary text-[18px]">verified_user</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-gradient-to-br from-gray-700 to-gray-900 border border-white/10 flex items-center justify-center overflow-hidden">
+<div class="w-full h-full bg-cover bg-center" data-alt="Portrait of a young woman smiling" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDxhcI7PGvdnZa6p7aFGsm0GpIWz6zuxuA9JxZmCNMyvLF8sQCGoFtjNbwDgs_XKCn5_ULntgUa_r_9T2OngLZd841yaNOzhRbNa4Wb-vQ_DkVeVaFQ2-mDu7zrlRSgBzTvAy_E1TeY9UHnITxLxJyCtXq13FvfZR3-7t1HGatJp69KnGLoeB0DaJ297mSHuaIxkLstEuiT9rhNMZm_7MeMxUIrg369_Ml9Hd5SFPD-Ut5vUmOPaA51_MeF-bZC15AcAiSnv56_5eFr');"></div>
+</div>
+<div>
+<p class="text-white text-lg font-bold">Alice M.</p>
+<p class="text-white/50 text-xs">chase_alice@mail.com</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Floating Action Button Area (Bottom Fixed) -->
+<div class="absolute bottom-20 left-0 w-full px-6 pb-4 z-20 bg-gradient-to-t from-[#102219] via-[#102219]/90 to-transparent pt-8">
+<button class="w-full bg-primary hover:bg-[#0fd672] active:bg-[#0dbd64] text-black font-bold text-lg py-4 rounded-xl shadow-[0_0_20px_rgba(19,236,128,0.3)] transition-all flex items-center justify-center gap-2 group">
+<span>Send $50.00</span>
+<span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+<!-- Bottom Navigation Bar -->
+<div class="absolute bottom-0 w-full z-30">
+<div class="glass-panel border-t border-white/10 backdrop-blur-xl h-20 flex items-center justify-around pb-2 px-2">
+<button class="flex flex-col items-center justify-center w-16 gap-1 group">
+<span class="material-symbols-outlined text-white/50 group-hover:text-primary transition-colors">home</span>
+<span class="text-[10px] text-white/50 group-hover:text-primary font-medium">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center w-16 gap-1 group">
+<div class="bg-primary/20 p-1.5 rounded-xl group-hover:bg-primary/30 transition-colors">
+<span class="material-symbols-outlined text-primary">send</span>
+</div>
+<span class="text-[10px] text-primary font-bold">Send</span>
+</button>
+<button class="flex flex-col items-center justify-center w-16 gap-1 group">
+<span class="material-symbols-outlined text-white/50 group-hover:text-primary transition-colors">account_balance_wallet</span>
+<span class="text-[10px] text-white/50 group-hover:text-primary font-medium">Wallet</span>
+</button>
+<button class="flex flex-col items-center justify-center w-16 gap-1 group">
+<span class="material-symbols-outlined text-white/50 group-hover:text-primary transition-colors">person</span>
+<span class="text-[10px] text-white/50 group-hover:text-primary font-medium">Profile</span>
+</button>
+</div>
+</div>
+</div>
+</body></html>
