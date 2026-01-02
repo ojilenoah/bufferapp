@@ -1,14 +1,17 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
-export default function ActionsGrid({ navigation }) {
+export default function ActionsGrid() {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       <View style={styles.row}>
         <TouchableOpacity
           style={[styles.rectBtn, styles.primary]}
-          onPress={() => navigation && navigation.navigate("Send")}
+          onPress={() => navigation.navigate("Send")}
           activeOpacity={0.8}
         >
           <Text style={styles.rectLabel}>Send</Text>
@@ -16,7 +19,7 @@ export default function ActionsGrid({ navigation }) {
 
         <TouchableOpacity
           style={styles.rectBtn}
-          onPress={() => navigation && navigation.navigate("Request")}
+          onPress={() => navigation.navigate("Request")}
           activeOpacity={0.8}
         >
           <Text style={styles.rectLabel}>Request</Text>

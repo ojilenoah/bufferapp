@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaView, StyleSheet, View, ScrollView } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { useFonts } from "expo-font";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import Header from "./components/Header";
 import Balance from "./components/Balance";
 import AccountCard from "./components/AccountCard";
@@ -15,6 +17,7 @@ import TxnSent from "./screens/TxnSent";
 import Profile from "./screens/Profile";
 import Settings from "./screens/Settings";
 import Wallet from "./screens/Wallet";
+import CountrySelect from "./screens/CountrySelect";
 
 const Stack = createNativeStackNavigator();
 
@@ -94,16 +97,20 @@ const totalTransactions = transactionData
 
 const trend = "+2.4% this week";
 
-function Home({ navigation }) {
+function Home({ navigation, currency }) {
   return (
     <SafeAreaView style={styles.safe}>
       <StatusBar style="light" />
       <View style={styles.bgDecorative} />
       <View style={styles.container}>
         <Header />
-        <AccountCard trend={trend} navigation={navigation} />
+        <AccountCard
+          trend={trend}
+          navigation={navigation}
+          currency={currency}
+        />
         <Balance amount={totalTransactions} />
-        <ActionsGrid navigation={navigation} />
+        <ActionsGrid />
         <View style={{ height: 8 }} />
         <Transactions />
       </View>
@@ -113,10 +120,30 @@ function Home({ navigation }) {
 }
 
 export default function App() {
+  const [userCountry, setUserCountry] = useState(null);
+
+  useEffect(() => {
+    const loadCountry = async () => {
+      const stored = await AsyncStorage.getItem("userCountry");
+      if (stored) {
+        setUserCountry(JSON.parse(stored));
+      }
+    };
+    loadCountry();
+  }, []);
+
+  const currency = userCountry ? userCountry.symbol : "$";
+
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Home" component={Home} />
+      <Stack.Navigator
+        screenOptions={{ headerShown: false }}
+        initialRouteName="CountrySelect"
+      >
+        <Stack.Screen name="CountrySelect" component={CountrySelect} />
+        <Stack.Screen name="Home">
+          {(props) => <Home {...props} currency={currency} />}
+        </Stack.Screen>
         <Stack.Screen name="Send" component={SendScreen} />
         <Stack.Screen name="BankUser" component={BankUser} />
         <Stack.Screen name="TxnSent" component={TxnSent} />
