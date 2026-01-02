@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo, useEffect, useRef } from "react";
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   StyleSheet,
   ScrollView,
   Image,
+  ActivityIndicator,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 
@@ -37,6 +38,30 @@ const COUNTRIES = [
   },
 ];
 
+const BANKS = [
+  { id: "CHASE", name: "Chase Bank", hint: "Checking", color: "#003399" },
+  { id: "BOFA", name: "Bank of America", hint: "Savings", color: "#c8102e" },
+  { id: "WF", name: "Wells Fargo", hint: "Checking", color: "#e61b0f" },
+];
+
+function resolveRecipientName(bankId, account) {
+  if (!account) return "Recipient";
+  const last = account.slice(-1);
+  const map = {
+    0: "Alice M.",
+    1: "Bob K.",
+    2: "Chuks O.",
+    3: "Diana R.",
+    4: "Ethan L.",
+    5: "Fatima N.",
+    6: "George P.",
+    7: "Hannah T.",
+    8: "Ibrahim S.",
+    9: "Jane Q.",
+  };
+  return map[last] || "Recipient";
+}
+
 export default function SendScreen({ navigation, route }) {
   const [country, setCountry] = useState(COUNTRIES[0]);
   const [usd, setUsd] = useState("");
@@ -44,6 +69,10 @@ export default function SendScreen({ navigation, route }) {
   const [openPicker, setOpenPicker] = useState(false);
   const [overlayVisible, setOverlayVisible] = useState(false);
   const [overlayDone, setOverlayDone] = useState(false);
+  const [banksVisible, setBanksVisible] = useState(false);
+  const [banksLoading, setBanksLoading] = useState(false);
+  const [selectedBank, setSelectedBank] = useState(null);
+  const accountTimerRef = useRef(null);
 
   const numericUsd = useMemo(() => parseFloat(usd) || 0, [usd]);
   const converted = useMemo(
@@ -77,6 +106,64 @@ export default function SendScreen({ navigation, route }) {
       };
     }
   }, [route?.params?.sending]);
+
+  useEffect(() => {
+    // when a valid 10-digit account is entered, show a small loading then reveal banks
+    const valid = /^[0-9]{10}$/.test(account);
+    if (valid) {
+      setBanksLoading(true);
+      setBanksVisible(false);
+      setSelectedBank(null);
+      if (accountTimerRef.current) clearTimeout(accountTimerRef.current);
+      accountTimerRef.current = setTimeout(() => {
+        setBanksLoading(false);
+        setBanksVisible(true);
+      }, 2000);
+    } else {
+      if (accountTimerRef.current) {
+        clearTimeout(accountTimerRef.current);
+        accountTimerRef.current = null;
+      }
+      setBanksLoading(false);
+      setBanksVisible(false);
+      setSelectedBank(null);
+    }
+
+    return () => {
+      if (accountTimerRef.current) {
+        clearTimeout(accountTimerRef.current);
+        accountTimerRef.current = null;
+      }
+    };
+  }, [account]);
+
+  function handleSend() {
+    if (!selectedBank) return;
+    setOverlayVisible(true);
+    setOverlayDone(false);
+    const txnId =
+      "TXN-" + Math.floor(Math.random() * 900000 + 100000).toString();
+    const receiptParams = {
+      recipient: resolveRecipientName(selectedBank.id, account),
+      amountUsd: numericUsd,
+      amountLocal: converted,
+      currency: country?.currency,
+      country,
+      bank: selectedBank,
+      account,
+      txnId,
+      time: new Date().toISOString(),
+    };
+
+    const t1 = setTimeout(() => setOverlayDone(true), 1400);
+    const t2 = setTimeout(() => {
+      navigation.navigate("TxnSent", receiptParams);
+      setOverlayVisible(false);
+      setOverlayDone(false);
+      clearTimeout(t1);
+      clearTimeout(t2);
+    }, 2200);
+  }
 
   return (
     <View style={styles.safe}>
@@ -224,32 +311,111 @@ export default function SendScreen({ navigation, route }) {
             />
           </TouchableOpacity>
         </View>
+        <View style={{ marginTop: 12 }}>
+          {banksLoading ? (
+            <View style={styles.bankLoaderRow}>
+              <ActivityIndicator size="small" color="#13ec80" />
+              <Text style={{ color: "rgba(255,255,255,0.8)", marginLeft: 8 }}>
+                Looking up banks...
+              </Text>
+            </View>
+          ) : null}
+
+          {banksVisible ? (
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              style={styles.bankSlider}
+              contentContainerStyle={{ paddingHorizontal: 6 }}
+            >
+              {BANKS.map((b) => (
+                <TouchableOpacity
+                  key={b.id}
+                  style={[
+                    styles.bankPill,
+                    selectedBank?.id === b.id && styles.bankPillActive,
+                  ]}
+                  onPress={() => setSelectedBank(b)}
+                >
+                  <View style={[styles.bankLogo, { backgroundColor: b.color }]}>
+                    <MaterialIcons
+                      name="account-balance"
+                      size={18}
+                      color="#fff"
+                    />
+                  </View>
+                  <Text style={styles.bankPillText}>
+                    {b.name.split(" ")[0]}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          ) : null}
+
+          {selectedBank ? (
+            <View style={styles.recipientCardInline}>
+              <View style={styles.recipientLeft}>
+                <View style={styles.recipientAvatar} />
+                <View>
+                  <Text style={styles.recipientName}>
+                    {resolveRecipientName(selectedBank?.id, account)}
+                  </Text>
+                  <Text style={styles.recipientEmail}>
+                    {selectedBank.name.replace(" ", "_").toLowerCase()}@mail.com
+                  </Text>
+                </View>
+              </View>
+            </View>
+          ) : null}
+        </View>
         <Text style={styles.note}>
           Please ensure the IBAN is correct to avoid delays.
         </Text>
 
-        <View style={{ height: 24 }} />
+        <View style={{ height: 12 }} />
 
-        {/** Account must be exactly 10 digits to proceed */}
+        {/** Account must be exactly 10 digits to proceed; show banks inline */}
         {(() => {
           const validAccount = /^[0-9]{10}$/.test(account);
+          if (!validAccount) {
+            return (
+              <TouchableOpacity
+                style={[styles.continueBtn, styles.continueDisabled]}
+                disabled
+              >
+                <Text style={styles.continueText}>Enter valid account</Text>
+              </TouchableOpacity>
+            );
+          }
+
+          if (banksLoading) {
+            return (
+              <TouchableOpacity
+                style={[styles.continueBtn, styles.continueDisabled]}
+                disabled
+              >
+                <Text style={styles.continueText}>Looking up banks...</Text>
+              </TouchableOpacity>
+            );
+          }
+
+          if (!selectedBank) {
+            return (
+              <TouchableOpacity
+                style={[styles.continueBtn, styles.continueDisabled]}
+                disabled
+              >
+                <Text style={styles.continueText}>Select bank</Text>
+              </TouchableOpacity>
+            );
+          }
+
           return (
-            <TouchableOpacity
-              style={[
-                styles.continueBtn,
-                !validAccount && styles.continueDisabled,
-              ]}
-              onPress={() =>
-                navigation.navigate("BankUser", {
-                  country,
-                  usd: numericUsd,
-                  converted,
-                  account,
-                })
-              }
-              disabled={!validAccount}
-            >
-              <Text style={styles.continueText}>Continue</Text>
+            <TouchableOpacity style={styles.continueBtn} onPress={handleSend}>
+              <Text style={styles.continueText}>
+                Send {country?.symbol}
+                {Number(converted).toFixed(2)}
+              </Text>
             </TouchableOpacity>
           );
         })()}
@@ -356,6 +522,44 @@ const styles = StyleSheet.create({
     fontWeight: "800",
     minWidth: 120,
   },
+  bankLoaderRow: { flexDirection: "row", alignItems: "center", marginTop: 8 },
+  bankSlider: { marginTop: 10 },
+  bankPill: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 12,
+    marginHorizontal: 6,
+  },
+  bankPillActive: { borderWidth: 1, borderColor: "#13ec80" },
+  bankLogo: {
+    width: 36,
+    height: 36,
+    borderRadius: 8,
+    alignItems: "center",
+    justifyContent: "center",
+    marginRight: 10,
+  },
+  bankPillText: { color: "#fff", fontWeight: "700" },
+  recipientCardInline: {
+    marginTop: 12,
+    backgroundColor: "rgba(255,255,255,0.03)",
+    borderLeftWidth: 4,
+    borderLeftColor: "#13ec80",
+    padding: 12,
+    borderRadius: 12,
+  },
+  recipientLeft: { flexDirection: "row", alignItems: "center" },
+  recipientAvatar: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: "rgba(255,255,255,0.06)",
+    marginRight: 12,
+  },
+  recipientName: { color: "#fff", fontWeight: "800" },
+  recipientEmail: { color: "rgba(255,255,255,0.6)", fontSize: 12 },
   currencyBtn: {
     flexDirection: "row",
     alignItems: "center",
