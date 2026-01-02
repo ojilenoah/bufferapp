@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
+import { BlurView } from "expo-blur";
 import * as Clipboard from "expo-clipboard";
 
 export default function AccountCard({
@@ -21,7 +22,7 @@ export default function AccountCard({
   }
 
   return (
-    <View style={styles.card}>
+    <BlurView intensity={20} style={styles.card}>
       <View style={styles.topRow}>
         <View>
           <Text style={styles.topLabel}>Account</Text>
@@ -42,15 +43,8 @@ export default function AccountCard({
             {balance}
           </Text>
         </View>
-        <View style={styles.walletIconWrap}>
-          <MaterialIcons
-            name="account-balance-wallet"
-            size={22}
-            color="#072015"
-          />
-        </View>
       </View>
-    </View>
+    </BlurView>
   );
 }
 
@@ -58,9 +52,8 @@ const styles = StyleSheet.create({
   card: {
     marginHorizontal: 16,
     marginTop: 12,
-    backgroundColor: "rgba(255,255,255,0.03)",
     borderRadius: 14,
-    padding: 14,
+    padding: 20,
   },
   topRow: {
     flexDirection: "row",
@@ -68,22 +61,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   topLabel: { color: "rgba(255,255,255,0.6)", fontSize: 12 },
-  account: { color: "#fff", fontWeight: "700", marginTop: 6 },
+  account: { color: "#fff", fontWeight: "900", marginTop: 6 },
   copyBtn: { flexDirection: "row", alignItems: "center", gap: 8 },
   copiedText: { color: "#ffd24d", marginLeft: 8, fontWeight: "700" },
   bottomRow: {
     marginTop: 12,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    alignItems: "flex-start",
   },
   bottomLabel: { color: "rgba(255,255,255,0.6)", fontSize: 12 },
   balance: { color: "#fff", fontSize: 20, fontWeight: "800", marginTop: 6 },
-  walletIconWrap: {
-    backgroundColor: "#13ec80",
-    padding: 10,
-    borderRadius: 12,
-    alignItems: "center",
-    justifyContent: "center",
-  },
 });
