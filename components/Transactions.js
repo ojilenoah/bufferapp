@@ -1,37 +1,39 @@
 import React from "react";
 import { View, Text, StyleSheet, Image, FlatList } from "react-native";
 
+const COMMON_ICON = "https://cdn-icons-png.flaticon.com/512/149/149071.png";
+
 const data = [
   {
     id: "1",
-    title: "Starbucks Coffee",
+    title: "Chinedu Okeke",
     subtitle: "Today, 9:41 AM",
     amount: "-$5.50",
-    icon: "https://cdn-icons-png.flaticon.com/512/149/149071.png",
+    icon: COMMON_ICON,
     type: "debit",
   },
   {
     id: "2",
-    title: "Salary Deposit",
-    subtitle: "Yesterday",
-    amount: "+$2,000.00",
-    icon: "https://cdn-icons-png.flaticon.com/512/263/263115.png",
+    title: "Aisha Bello",
+    subtitle: "Yesterday, 2:10 PM",
+    amount: "+$1,200.00",
+    icon: COMMON_ICON,
     type: "credit",
   },
   {
     id: "3",
-    title: "Alice M.",
-    subtitle: "Pending Auth",
+    title: "Emeka Nwankwo",
+    subtitle: "Aug 28, 11:02 AM",
     amount: "-$50.00",
-    icon: "https://cdn-icons-png.flaticon.com/512/194/194938.png",
-    type: "pending",
+    icon: COMMON_ICON,
+    type: "debit",
   },
   {
     id: "4",
-    title: "Uber Ride",
+    title: "Ngozi Amadi",
     subtitle: "Aug 22",
     amount: "-$24.50",
-    icon: "https://cdn-icons-png.flaticon.com/512/3075/3075977.png",
+    icon: COMMON_ICON,
     type: "debit",
   },
 ];
