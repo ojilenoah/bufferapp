@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Modal,
+  TouchableWithoutFeedback,
+} from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 
 const RANGES = ["Today", "This week", "This month", "This year"];
@@ -14,12 +21,13 @@ export default function Balance({
   return (
     <View style={styles.container}>
       <View style={styles.topRow}>
-        <Text style={styles.label}>Total transactions this week</Text>
-        <View style={{ width: 12 }} />
+        <Text style={styles.label}>Total transactions</Text>
+
         <View style={styles.selectorWrap}>
           <TouchableOpacity
             onPress={() => setOpen((v) => !v)}
             style={styles.selector}
+            activeOpacity={0.9}
           >
             <Text style={styles.selectorText}>{selected}</Text>
             <MaterialIcons
@@ -28,22 +36,6 @@ export default function Balance({
               color="rgba(255,255,255,0.6)"
             />
           </TouchableOpacity>
-          {open && (
-            <View style={styles.options}>
-              {RANGES.map((r) => (
-                <TouchableOpacity
-                  key={r}
-                  onPress={() => {
-                    setSelected(r);
-                    setOpen(false);
-                  }}
-                  style={styles.option}
-                >
-                  <Text style={styles.optionText}>{r}</Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-          )}
         </View>
       </View>
 
@@ -54,6 +46,34 @@ export default function Balance({
           <Text style={styles.trend}>{trend}</Text>
         </View>
       </View>
+
+      <Modal
+        transparent
+        visible={open}
+        animationType="fade"
+        onRequestClose={() => setOpen(false)}
+      >
+        <TouchableWithoutFeedback onPress={() => setOpen(false)}>
+          <View style={styles.modalOverlay} />
+        </TouchableWithoutFeedback>
+
+        <View style={styles.modalContainer} pointerEvents="box-none">
+          <View style={styles.optionsCard}>
+            {RANGES.map((r) => (
+              <TouchableOpacity
+                key={r}
+                onPress={() => {
+                  setSelected(r);
+                  setOpen(false);
+                }}
+                style={styles.option}
+              >
+                <Text style={styles.optionText}>{r}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -85,6 +105,24 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     overflow: "hidden",
     elevation: 3,
+  },
+  modalOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: "rgba(0,0,0,0.3)",
+  },
+  modalContainer: {
+    position: "absolute",
+    top: 70,
+    right: 20,
+    alignItems: "flex-end",
+  },
+  optionsCard: {
+    backgroundColor: "rgba(16,34,25,0.98)",
+    borderRadius: 12,
+    overflow: "hidden",
+    elevation: 4,
+    minWidth: 160,
+    paddingVertical: 6,
   },
   option: { paddingHorizontal: 12, paddingVertical: 8 },
   optionText: { color: "#fff" },

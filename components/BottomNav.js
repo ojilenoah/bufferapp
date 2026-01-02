@@ -11,10 +11,10 @@ export default function BottomNav() {
       <View style={styles.nav}>
         <TouchableOpacity
           style={styles.btn}
-          onPress={() => navigation.navigate("More")}
+          onPress={() => navigation.navigate("Home")}
         >
-          <MaterialIcons name="menu" size={24} color="rgba(255,255,255,0.9)" />
-          <Text style={styles.label}>More</Text>
+          <MaterialIcons name="home" size={26} color="#13ec80" />
+          <Text style={styles.labelActive}>Home</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
