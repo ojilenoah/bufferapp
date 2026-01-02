@@ -5,7 +5,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 export default function Header() {
   return (
     <View style={styles.container}>
-      <View style={{ width: 48 }} />
+      <Text style={styles.appName}>bufferpay</Text>
       <TouchableOpacity style={styles.bell} activeOpacity={0.7}>
         <MaterialIcons name="notifications" size={22} color="#fff" />
         <View style={styles.notificationDot} />
@@ -22,6 +22,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 18,
     paddingBottom: 8,
+  },
+  appName: {
+    color: "#fff",
+    fontSize: 18,
+    fontWeight: "bold",
   },
 
   avatarWrap: {

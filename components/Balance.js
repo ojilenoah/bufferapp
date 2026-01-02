@@ -40,12 +40,6 @@ export default function Balance({
       </View>
 
       <Text style={styles.amount}>${amount}</Text>
-      <View style={styles.trendWrap}>
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
-          <MaterialIcons name="trending-up" size={14} color="#13ec80" />
-          <Text style={styles.trend}>{trend}</Text>
-        </View>
-      </View>
 
       <Modal
         transparent

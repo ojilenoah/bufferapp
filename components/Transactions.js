@@ -36,6 +36,38 @@ const data = [
     icon: COMMON_ICON,
     type: "reversed",
   },
+  {
+    id: "5",
+    title: "Tunde Adebayo",
+    subtitle: "Today, 3:15 PM",
+    amount: "-$10.00",
+    icon: COMMON_ICON,
+    type: "sent",
+  },
+  {
+    id: "6",
+    title: "Fatima Hassan",
+    subtitle: "Yesterday, 8:45 AM",
+    amount: "+$500.00",
+    icon: COMMON_ICON,
+    type: "sent",
+  },
+  {
+    id: "7",
+    title: "Ibrahim Musa",
+    subtitle: "Aug 30, 4:20 PM",
+    amount: "-$75.25",
+    icon: COMMON_ICON,
+    type: "reversed",
+  },
+  {
+    id: "8",
+    title: "Zara Khan",
+    subtitle: "Aug 25",
+    amount: "-$15.00",
+    icon: COMMON_ICON,
+    type: "sent",
+  },
 ];
 
 function Row({ item }) {

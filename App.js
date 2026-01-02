@@ -17,6 +17,82 @@ import Settings from "./screens/Settings";
 
 const Stack = createNativeStackNavigator();
 
+const transactionData = [
+  {
+    id: "1",
+    title: "Chinedu Okeke",
+    subtitle: "Today, 9:41 AM",
+    amount: "-$5.50",
+    icon: "https://cdn-icons-png.flaticon.com/512/149/149071.png",
+    type: "reversed",
+  },
+  {
+    id: "2",
+    title: "Aisha Bello",
+    subtitle: "Yesterday, 2:10 PM",
+    amount: "+$1,200.00",
+    icon: "https://cdn-icons-png.flaticon.com/512/149/149071.png",
+    type: "sent",
+  },
+  {
+    id: "3",
+    title: "Emeka Nwankwo",
+    subtitle: "Aug 28, 11:02 AM",
+    amount: "-$50.00",
+    icon: "https://cdn-icons-png.flaticon.com/512/149/149071.png",
+    type: "reversed",
+  },
+  {
+    id: "4",
+    title: "Ngozi Amadi",
+    subtitle: "Aug 22",
+    amount: "-$24.50",
+    icon: "https://cdn-icons-png.flaticon.com/512/149/149071.png",
+    type: "reversed",
+  },
+  {
+    id: "5",
+    title: "Tunde Adebayo",
+    subtitle: "Today, 3:15 PM",
+    amount: "-$10.00",
+    icon: "https://cdn-icons-png.flaticon.com/512/149/149071.png",
+    type: "sent",
+  },
+  {
+    id: "6",
+    title: "Fatima Hassan",
+    subtitle: "Yesterday, 8:45 AM",
+    amount: "+$500.00",
+    icon: "https://cdn-icons-png.flaticon.com/512/149/149071.png",
+    type: "sent",
+  },
+  {
+    id: "7",
+    title: "Ibrahim Musa",
+    subtitle: "Aug 30, 4:20 PM",
+    amount: "-$75.25",
+    icon: "https://cdn-icons-png.flaticon.com/512/149/149071.png",
+    type: "reversed",
+  },
+  {
+    id: "8",
+    title: "Zara Khan",
+    subtitle: "Aug 25",
+    amount: "-$15.00",
+    icon: "https://cdn-icons-png.flaticon.com/512/149/149071.png",
+    type: "sent",
+  },
+];
+
+const totalTransactions = transactionData
+  .reduce((sum, item) => {
+    const amt = parseFloat(item.amount.replace(/[$,]/g, ""));
+    return sum + amt;
+  }, 0)
+  .toFixed(2);
+
+const trend = "+2.4% this week";
+
 function Home({ navigation }) {
   return (
     <SafeAreaView style={styles.safe}>
@@ -27,8 +103,8 @@ function Home({ navigation }) {
         showsVerticalScrollIndicator={false}
       >
         <Header />
-        <AccountCard />
-        <Balance />
+        <AccountCard trend={trend} />
+        <Balance amount={totalTransactions} />
         <ActionsGrid navigation={navigation} />
         <View style={{ height: 8 }} />
         <Transactions />

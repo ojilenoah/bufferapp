@@ -8,6 +8,7 @@ export default function AccountCard({
   account = "0123456789",
   balance = "14,230.50",
   currency = "$",
+  trend = "+2.4% this week",
 }) {
   const [copied, setCopied] = useState(false);
 
@@ -42,6 +43,10 @@ export default function AccountCard({
             {currency}
             {balance}
           </Text>
+          <View style={styles.trendWrap}>
+            <MaterialIcons name="trending-up" size={14} color="#13ec80" />
+            <Text style={styles.trend}>{trend}</Text>
+          </View>
         </View>
       </View>
     </BlurView>
@@ -70,4 +75,11 @@ const styles = StyleSheet.create({
   },
   bottomLabel: { color: "rgba(255,255,255,0.6)", fontSize: 12 },
   balance: { color: "#fff", fontSize: 20, fontWeight: "800", marginTop: 6 },
+  trendWrap: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    marginTop: 6,
+  },
+  trend: { color: "#13ec80", fontSize: 12 },
 });
