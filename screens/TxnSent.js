@@ -1,11 +1,5 @@
-import React, { useRef, useEffect } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  Animated,
-} from "react-native";
+import React from "react";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 
 function formatDate(iso) {
@@ -30,25 +24,6 @@ export default function TxnSent({ route, navigation }) {
     maximumFractionDigits: 2,
   });
 
-  const pulse = useRef(new Animated.Value(0)).current;
-
-  useEffect(() => {
-    Animated.loop(
-      Animated.sequence([
-        Animated.timing(pulse, {
-          toValue: 1,
-          duration: 600,
-          useNativeDriver: true,
-        }),
-        Animated.timing(pulse, {
-          toValue: 0,
-          duration: 600,
-          useNativeDriver: true,
-        }),
-      ])
-    ).start();
-  }, [pulse]);
-
   return (
     <View style={styles.safe}>
       <View style={styles.headerBar}>
@@ -64,38 +39,10 @@ export default function TxnSent({ route, navigation }) {
 
       <View style={styles.body}>
         <View style={styles.successWrap}>
-          <Animated.View
-            style={[
-              styles.bgGlow,
-              {
-                transform: [
-                  {
-                    scale: pulse.interpolate({
-                      inputRange: [0, 1],
-                      outputRange: [1, 1.08],
-                    }),
-                  },
-                ],
-              },
-            ]}
-          />
-          <Animated.View
-            style={[
-              styles.successIcon,
-              {
-                transform: [
-                  {
-                    scale: pulse.interpolate({
-                      inputRange: [0, 1],
-                      outputRange: [0.96, 1.06],
-                    }),
-                  },
-                ],
-              },
-            ]}
-          >
+          <View style={styles.bgGlow} />
+          <View style={styles.successIcon}>
             <MaterialIcons name="check" size={48} color="#13ec80" />
-          </Animated.View>
+          </View>
           <Text style={styles.head}>Transfer Successful</Text>
           <Text style={styles.time}>
             {formatDate(time || new Date().toISOString())}

@@ -39,11 +39,23 @@ const COUNTRIES = [
   },
 ];
 
-const BANKS = [
-  { id: "CHASE", name: "Chase Bank", hint: "Checking", color: "#003399" },
-  { id: "BOFA", name: "Bank of America", hint: "Savings", color: "#c8102e" },
-  { id: "WF", name: "Wells Fargo", hint: "Checking", color: "#e61b0f" },
-];
+const BANKS_BY_COUNTRY = {
+  US: [
+    { id: "CHASE", name: "Chase Bank", hint: "Checking", color: "#003399" },
+    { id: "BOFA", name: "Bank of America", hint: "Savings", color: "#c8102e" },
+    { id: "WF", name: "Wells Fargo", hint: "Checking", color: "#e61b0f" },
+  ],
+  EU: [
+    { id: "DEUT", name: "Deutsche Bank", hint: "Checking", color: "#003366" },
+    { id: "HSBC", name: "HSBC", hint: "Checking", color: "#cc0000" },
+  ],
+  NG: [
+    { id: "OPAY", name: "OPay", hint: "Mobile", color: "#ffb300" },
+    { id: "FBN", name: "FirstBank", hint: "Checking", color: "#0033a0" },
+    { id: "MONI", name: "Moniepoint", hint: "Agent", color: "#ff6b6b" },
+    { id: "GTB", name: "GTBank", hint: "Checking", color: "#0099ff" },
+  ],
+};
 
 function resolveRecipientName(bankId, account) {
   if (!account) return "Recipient";
@@ -75,6 +87,7 @@ export default function SendScreen({ navigation, route }) {
   const [selectedBank, setSelectedBank] = useState(null);
   const accountTimerRef = useRef(null);
   const spinAnim = useRef(new Animated.Value(0)).current;
+  const overlaySpin = useRef(new Animated.Value(0)).current;
 
   const numericUsd = useMemo(() => parseFloat(usd) || 0, [usd]);
   const converted = useMemo(
@@ -160,6 +173,28 @@ export default function SendScreen({ navigation, route }) {
       if (loop && loop.stop) loop.stop();
     };
   }, [banksLoading, spinAnim]);
+
+  useEffect(() => {
+    let spinLoop;
+    if (overlayVisible && !overlayDone) {
+      overlaySpin.setValue(0);
+      spinLoop = Animated.loop(
+        Animated.timing(overlaySpin, {
+          toValue: 1,
+          duration: 900,
+          useNativeDriver: true,
+        })
+      );
+      spinLoop.start();
+    } else {
+      overlaySpin.stopAnimation();
+      overlaySpin.setValue(0);
+    }
+
+    return () => {
+      if (spinLoop && spinLoop.stop) spinLoop.stop();
+    };
+  }, [overlayVisible, overlayDone, overlaySpin]);
 
   function handleSend() {
     if (!selectedBank) return;
@@ -269,7 +304,15 @@ export default function SendScreen({ navigation, route }) {
                   placeholder="0.00"
                   placeholderTextColor="rgba(255,255,255,0.3)"
                   value={usd}
-                  onChangeText={setUsd}
+                  onChangeText={(t) => {
+                    // allow only digits and one decimal point
+                    let cleaned = t.replace(/[^0-9.]/g, "");
+                    // remove extra dots
+                    const parts = cleaned.split(".");
+                    if (parts.length > 2)
+                      cleaned = parts[0] + "." + parts.slice(1).join("");
+                    setUsd(cleaned);
+                  }}
                   style={styles.amountInput}
                 />
               </View>
@@ -365,27 +408,31 @@ export default function SendScreen({ navigation, route }) {
               style={styles.bankSlider}
               contentContainerStyle={{ paddingHorizontal: 6 }}
             >
-              {BANKS.map((b) => (
-                <TouchableOpacity
-                  key={b.id}
-                  style={[
-                    styles.bankPill,
-                    selectedBank?.id === b.id && styles.bankPillActive,
-                  ]}
-                  onPress={() => setSelectedBank(b)}
-                >
-                  <View style={[styles.bankLogo, { backgroundColor: b.color }]}>
-                    <MaterialIcons
-                      name="account-balance"
-                      size={18}
-                      color="#fff"
-                    />
-                  </View>
-                  <Text style={styles.bankPillText}>
-                    {b.name.split(" ")[0]}
-                  </Text>
-                </TouchableOpacity>
-              ))}
+              {(BANKS_BY_COUNTRY[country.key] || BANKS_BY_COUNTRY.US).map(
+                (b) => (
+                  <TouchableOpacity
+                    key={b.id}
+                    style={[
+                      styles.bankPill,
+                      selectedBank?.id === b.id && styles.bankPillActive,
+                    ]}
+                    onPress={() => setSelectedBank(b)}
+                  >
+                    <View
+                      style={[styles.bankLogo, { backgroundColor: b.color }]}
+                    >
+                      <MaterialIcons
+                        name="account-balance"
+                        size={18}
+                        color="#fff"
+                      />
+                    </View>
+                    <Text style={styles.bankPillText}>
+                      {b.name.split(" ")[0]}
+                    </Text>
+                  </TouchableOpacity>
+                )
+              )}
             </ScrollView>
           ) : null}
 
@@ -461,18 +508,31 @@ export default function SendScreen({ navigation, route }) {
       {overlayVisible ? (
         <View style={styles.overlay} pointerEvents="none">
           <View style={styles.overlayCenter}>
-            <View
+            <Animated.View
               style={[
                 styles.overlayCircle,
                 overlayDone && styles.overlayCircleDone,
               ]}
             >
-              <MaterialIcons
-                name={overlayDone ? "check" : "autorenew"}
-                size={48}
-                color={overlayDone ? "#13ec80" : "rgba(255,255,255,0.85)"}
-              />
-            </View>
+              <Animated.View
+                style={{
+                  transform: [
+                    {
+                      rotate: overlaySpin.interpolate({
+                        inputRange: [0, 1],
+                        outputRange: ["0deg", "360deg"],
+                      }),
+                    },
+                  ],
+                }}
+              >
+                <MaterialIcons
+                  name={overlayDone ? "check" : "autorenew"}
+                  size={48}
+                  color={overlayDone ? "#13ec80" : "#ffd24d"}
+                />
+              </Animated.View>
+            </Animated.View>
             <Text style={styles.overlayLabel}>
               {overlayDone ? "Sent" : "Sending..."}
             </Text>
@@ -655,14 +715,14 @@ const styles = StyleSheet.create({
     height: 120,
     borderRadius: 60,
     borderWidth: 2,
-    borderColor: "rgba(255,255,255,0.06)",
+    borderColor: "rgba(255,210,77,0.18)",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "rgba(0,0,0,0.35)",
+    backgroundColor: "rgba(255,210,77,0.12)",
   },
   overlayCircleDone: {
-    backgroundColor: "rgba(19,236,128,0.12)",
-    borderColor: "rgba(19,236,128,0.4)",
+    backgroundColor: "rgba(255,210,77,0.12)",
+    borderColor: "rgba(255,210,77,0.28)",
   },
   overlaySymbol: {
     color: "rgba(255,255,255,0.85)",

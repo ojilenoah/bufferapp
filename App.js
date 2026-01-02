@@ -5,6 +5,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Header from "./components/Header";
 import Balance from "./components/Balance";
+import AccountCard from "./components/AccountCard";
 import ActionsGrid from "./components/ActionsGrid";
 import Transactions from "./components/Transactions";
 import BottomNav from "./components/BottomNav";
@@ -26,6 +27,7 @@ function Home({ navigation }) {
         showsVerticalScrollIndicator={false}
       >
         <Header />
+        <AccountCard />
         <Balance />
         <ActionsGrid navigation={navigation} />
         <View style={{ height: 8 }} />
