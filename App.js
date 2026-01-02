@@ -14,6 +14,7 @@ import BankUser from "./screens/BankUserFixed";
 import TxnSent from "./screens/TxnSent";
 import Profile from "./screens/Profile";
 import Settings from "./screens/Settings";
+import Wallet from "./screens/Wallet";
 
 const Stack = createNativeStackNavigator();
 
@@ -98,18 +99,14 @@ function Home({ navigation }) {
     <SafeAreaView style={styles.safe}>
       <StatusBar style="light" />
       <View style={styles.bgDecorative} />
-      <ScrollView
-        contentContainerStyle={styles.container}
-        showsVerticalScrollIndicator={false}
-      >
+      <View style={styles.container}>
         <Header />
-        <AccountCard trend={trend} />
+        <AccountCard trend={trend} navigation={navigation} />
         <Balance amount={totalTransactions} />
         <ActionsGrid navigation={navigation} />
         <View style={{ height: 8 }} />
         <Transactions />
-        <View style={{ height: 120 }} />
-      </ScrollView>
+      </View>
       <BottomNav />
     </SafeAreaView>
   );
@@ -125,6 +122,7 @@ export default function App() {
         <Stack.Screen name="TxnSent" component={TxnSent} />
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="Settings" component={Settings} />
+        <Stack.Screen name="Wallet" component={Wallet} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -132,7 +130,7 @@ export default function App() {
 
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: "#102219" },
-  container: { paddingBottom: 40 },
+  container: { flex: 1, paddingBottom: 40 },
   bgDecorative: {
     position: "absolute",
     top: -120,

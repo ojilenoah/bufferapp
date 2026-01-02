@@ -9,6 +9,7 @@ export default function AccountCard({
   balance = "14,230.50",
   currency = "$",
   trend = "+2.4% this week",
+  navigation,
 }) {
   const [copied, setCopied] = useState(false);
 
@@ -39,10 +40,18 @@ export default function AccountCard({
       <View style={styles.bottomRow}>
         <View>
           <Text style={styles.bottomLabel}>Wallet balance</Text>
-          <Text style={styles.balance}>
-            {currency}
-            {balance}
-          </Text>
+          <TouchableOpacity
+            style={styles.balanceRow}
+            onPress={() => navigation.navigate("Wallet")}
+          >
+            <Text style={styles.balance}>
+              {currency}
+              {balance}
+            </Text>
+            <View style={styles.addBtn}>
+              <MaterialIcons name="add" size={20} color="#13ec80" />
+            </View>
+          </TouchableOpacity>
           <View style={styles.trendWrap}>
             <MaterialIcons name="trending-up" size={14} color="#13ec80" />
             <Text style={styles.trend}>{trend}</Text>
@@ -83,12 +92,21 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: "Montserrat-SemiBold",
   },
+  balanceRow: { flexDirection: "row", alignItems: "center", gap: 8 },
   balance: {
     color: "#fff",
     fontSize: 34,
     fontWeight: "800",
     marginTop: 6,
     fontFamily: "JetBrainsMono-Bold",
+  },
+  addBtn: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    backgroundColor: "rgba(19,236,128,0.1)",
+    alignItems: "center",
+    justifyContent: "center",
   },
   trendWrap: {
     flexDirection: "row",

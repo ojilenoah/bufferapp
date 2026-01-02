@@ -109,6 +109,7 @@ export default function Transactions() {
         keyExtractor={(i) => i.id}
         renderItem={({ item }) => <Row item={item} />}
         ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
+        showsVerticalScrollIndicator={false}
       />
     </View>
   );
