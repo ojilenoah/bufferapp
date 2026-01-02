@@ -10,7 +10,7 @@ const data = [
     subtitle: "Today, 9:41 AM",
     amount: "-$5.50",
     icon: COMMON_ICON,
-    type: "debit",
+    type: "reversed",
   },
   {
     id: "2",
@@ -18,7 +18,7 @@ const data = [
     subtitle: "Yesterday, 2:10 PM",
     amount: "+$1,200.00",
     icon: COMMON_ICON,
-    type: "credit",
+    type: "sent",
   },
   {
     id: "3",
@@ -26,7 +26,7 @@ const data = [
     subtitle: "Aug 28, 11:02 AM",
     amount: "-$50.00",
     icon: COMMON_ICON,
-    type: "debit",
+    type: "reversed",
   },
   {
     id: "4",
@@ -34,7 +34,7 @@ const data = [
     subtitle: "Aug 22",
     amount: "-$24.50",
     icon: COMMON_ICON,
-    type: "debit",
+    type: "reversed",
   },
 ];
 
@@ -52,13 +52,13 @@ function Row({ item }) {
         <Text
           style={[
             styles.amount,
-            item.type === "credit" ? styles.credit : styles.debit,
+            item.type === "sent" ? styles.sent : styles.reversed,
           ]}
         >
           {item.amount}
         </Text>
         <Text style={styles.type}>
-          {item.type === "credit" ? "COMPLETED" : item.type.toUpperCase()}
+          {item.type === "sent" ? "SENT" : "REVERSED"}
         </Text>
       </View>
     </View>
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
   subtitle: { color: "rgba(255,255,255,0.6)", fontSize: 12 },
   right: { alignItems: "flex-end" },
   amount: { fontSize: 14, fontWeight: "800" },
-  credit: { color: "#13ec80" },
-  debit: { color: "#fff" },
+  sent: { color: "#13ec80" },
+  reversed: { color: "#ffd24d" },
   type: { fontSize: 10, color: "rgba(255,255,255,0.45)", marginTop: 4 },
 });

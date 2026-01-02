@@ -8,6 +8,7 @@ import {
   ScrollView,
   Image,
 } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
 
 const COUNTRIES = [
   {
@@ -84,11 +85,11 @@ export default function SendScreen({ navigation, route }) {
           onPress={() => navigation.goBack()}
           style={styles.iconBtn}
         >
-          <Text style={styles.iconText}>◀</Text>
+          <MaterialIcons name="arrow-back" size={22} color="#fff" />
         </TouchableOpacity>
         <Text style={styles.title}>Send Money</Text>
         <TouchableOpacity style={styles.iconBtn}>
-          <Text style={styles.iconText}>?</Text>
+          <MaterialIcons name="help-outline" size={20} color="#fff" />
         </TouchableOpacity>
       </View>
 
@@ -109,7 +110,11 @@ export default function SendScreen({ navigation, route }) {
               <Text style={styles.destSub}>{country.currency}</Text>
             </View>
           </View>
-          <Text style={styles.expand}>▾</Text>
+          <MaterialIcons
+            name="keyboard-arrow-down"
+            size={20}
+            color="rgba(255,255,255,0.6)"
+          />
         </TouchableOpacity>
 
         {openPicker && (
@@ -165,7 +170,11 @@ export default function SendScreen({ navigation, route }) {
                 style={styles.flagTiny}
               />
               <Text style={styles.currencyBtnText}>USD</Text>
-              <Text style={styles.currencyBtnArrow}>▾</Text>
+              <MaterialIcons
+                name="keyboard-arrow-down"
+                size={18}
+                color="rgba(255,255,255,0.6)"
+              />
             </TouchableOpacity>
           </View>
 
@@ -173,7 +182,11 @@ export default function SendScreen({ navigation, route }) {
             <View
               style={{ flexDirection: "row", alignItems: "center", gap: 8 }}
             >
-              <Text style={styles.rateIcon}>⇄</Text>
+              <MaterialIcons
+                name="swap-horiz"
+                size={16}
+                color="rgba(255,255,255,0.6)"
+              />
               <Text style={styles.rateText}>
                 1 USD ≈ {country.rate} {country.currency}
               </Text>
@@ -188,7 +201,11 @@ export default function SendScreen({ navigation, route }) {
         <Text style={[styles.label, { marginTop: 18 }]}>Recipient Account</Text>
         <View style={styles.accountCard}>
           <View style={styles.accountLeft}>
-            <Text style={styles.accountIcon}>🏦</Text>
+            <MaterialIcons
+              name="account-balance"
+              size={20}
+              color="rgba(255,255,255,0.6)"
+            />
           </View>
           <TextInput
             placeholder="10-digit account number"
@@ -200,7 +217,11 @@ export default function SendScreen({ navigation, route }) {
             style={styles.accountInput}
           />
           <TouchableOpacity style={styles.qrBtn}>
-            <Text style={styles.qrText}>📷</Text>
+            <MaterialIcons
+              name="photo-camera"
+              size={18}
+              color="rgba(255,255,255,0.8)"
+            />
           </TouchableOpacity>
         </View>
         <Text style={styles.note}>
@@ -243,14 +264,11 @@ export default function SendScreen({ navigation, route }) {
                 overlayDone && styles.overlayCircleDone,
               ]}
             >
-              <Text
-                style={[
-                  styles.overlaySymbol,
-                  overlayDone && styles.overlaySymbolDone,
-                ]}
-              >
-                {overlayDone ? "✓" : "⟳"}
-              </Text>
+              <MaterialIcons
+                name={overlayDone ? "check" : "autorenew"}
+                size={48}
+                color={overlayDone ? "#13ec80" : "rgba(255,255,255,0.85)"}
+              />
             </View>
             <Text style={styles.overlayLabel}>
               {overlayDone ? "Sent" : "Sending..."}

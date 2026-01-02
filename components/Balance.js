@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
 
 const RANGES = ["Today", "This week", "This month", "This year"];
 
@@ -21,7 +22,11 @@ export default function Balance({
             style={styles.selector}
           >
             <Text style={styles.selectorText}>{selected}</Text>
-            <Text style={styles.selectorArrow}>▾</Text>
+            <MaterialIcons
+              name="keyboard-arrow-down"
+              size={18}
+              color="rgba(255,255,255,0.6)"
+            />
           </TouchableOpacity>
           {open && (
             <View style={styles.options}>
@@ -44,7 +49,10 @@ export default function Balance({
 
       <Text style={styles.amount}>${amount}</Text>
       <View style={styles.trendWrap}>
-        <Text style={styles.trend}>▲ {trend}</Text>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+          <MaterialIcons name="trending-up" size={14} color="#13ec80" />
+          <Text style={styles.trend}>{trend}</Text>
+        </View>
       </View>
     </View>
   );

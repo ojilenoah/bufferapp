@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
@@ -11,10 +11,10 @@ export default function BottomNav() {
       <View style={styles.nav}>
         <TouchableOpacity
           style={styles.btn}
-          onPress={() => navigation.navigate("Home")}
+          onPress={() => navigation.navigate("More")}
         >
-          <MaterialIcons name="home" size={26} color="#13ec80" />
-          <Text style={styles.labelActive}>Home</Text>
+          <MaterialIcons name="menu" size={24} color="rgba(255,255,255,0.9)" />
+          <Text style={styles.label}>More</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -26,10 +26,15 @@ export default function BottomNav() {
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={styles.centerBtn}
-          onPress={() => navigation.navigate("Send")}
+          style={styles.btn}
+          onPress={() => navigation.navigate("Wallet")}
         >
-          <MaterialIcons name="sync-alt" size={22} color="#072015" />
+          <MaterialIcons
+            name="account-balance-wallet"
+            size={24}
+            color="rgba(255,255,255,0.9)"
+          />
+          <Text style={styles.label}>Wallet</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -42,16 +47,6 @@ export default function BottomNav() {
             color="rgba(255,255,255,0.9)"
           />
           <Text style={styles.label}>Settings</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.profileBtn}
-          onPress={() => navigation.navigate("Profile")}
-        >
-          <Image
-            source={{ uri: "https://i.pravatar.cc/40" }}
-            style={styles.profileImage}
-          />
         </TouchableOpacity>
       </View>
     </View>

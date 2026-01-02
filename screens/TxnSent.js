@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
 
 function formatDate(iso) {
   const d = new Date(iso);
@@ -30,7 +31,7 @@ export default function TxnSent({ route, navigation }) {
           onPress={() => navigation.popToTop()}
           style={styles.closeBtn}
         >
-          <Text style={styles.closeText}>✕</Text>
+          <MaterialIcons name="close" size={20} color="rgba(255,255,255,0.9)" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>TRANSACTION RECEIPT</Text>
         <View style={{ width: 36 }} />
@@ -40,7 +41,7 @@ export default function TxnSent({ route, navigation }) {
         <View style={styles.successWrap}>
           <View style={styles.bgGlow} />
           <View style={styles.successIcon}>
-            <Text style={styles.check}>✓</Text>
+            <MaterialIcons name="check" size={48} color="#13ec80" />
           </View>
           <Text style={styles.head}>Transfer Successful</Text>
           <Text style={styles.time}>
@@ -75,7 +76,11 @@ export default function TxnSent({ route, navigation }) {
               style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
             >
               <View style={styles.iconCircle}>
-                <Text style={{ color: "rgba(255,255,255,0.8)" }}>🏦</Text>
+                <MaterialIcons
+                  name="account-balance"
+                  size={18}
+                  color="rgba(255,255,255,0.8)"
+                />
               </View>
               <View>
                 <Text style={styles.smallLabel}>From</Text>
@@ -91,7 +96,11 @@ export default function TxnSent({ route, navigation }) {
               style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
             >
               <View style={styles.iconCircle}>
-                <Text style={{ color: "rgba(255,255,255,0.8)" }}>🔒</Text>
+                <MaterialIcons
+                  name="lock"
+                  size={18}
+                  color="rgba(255,255,255,0.8)"
+                />
               </View>
               <View style={{ flex: 1 }}>
                 <Text style={styles.smallLabel}>Reference ID</Text>
@@ -99,14 +108,27 @@ export default function TxnSent({ route, navigation }) {
               </View>
             </View>
             <TouchableOpacity style={styles.copyBtn}>
-              <Text style={{ color: "rgba(255,255,255,0.6)" }}>📋</Text>
+              <MaterialIcons
+                name="content-copy"
+                size={18}
+                color="rgba(255,255,255,0.6)"
+              />
             </TouchableOpacity>
           </View>
         </View>
 
         <View style={styles.footerActions}>
           <TouchableOpacity style={styles.downloadBtn}>
-            <Text style={styles.downloadText}>⬇ Download Receipt</Text>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <MaterialIcons
+                name="file-download"
+                size={18}
+                color="rgba(255,255,255,0.9)"
+              />
+              <Text style={[styles.downloadText, { marginLeft: 8 }]}>
+                Download Receipt
+              </Text>
+            </View>
           </TouchableOpacity>
 
           <TouchableOpacity

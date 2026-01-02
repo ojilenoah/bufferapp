@@ -6,6 +6,7 @@ import {
   StyleSheet,
   FlatList,
 } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
 
 const BANKS = [
   { id: "CHASE", name: "Chase Bank", hint: "Checking", color: "#003399" },
@@ -70,7 +71,7 @@ export default function BankUser({ route, navigation }) {
           onPress={() => navigation.goBack()}
           style={styles.iconBtn}
         >
-          <Text style={styles.backText}>◀</Text>
+          <MaterialIcons name="arrow-back" size={20} color="#fff" />
         </TouchableOpacity>
         <Text style={styles.title}>Select Institution</Text>
         <View style={{ width: 48 }} />
@@ -79,7 +80,7 @@ export default function BankUser({ route, navigation }) {
       <View style={styles.container}>
         <View style={styles.summaryWrap}>
           <View style={styles.summaryBadge}>
-            <Text style={styles.summaryIcon}>🏦</Text>
+            <MaterialIcons name="account-balance" size={20} color="#13ec80" />
           </View>
           <Text style={styles.summaryText}>
             Sending to account ending in •••• {account?.slice(-4) ?? "----"}
@@ -116,7 +117,7 @@ export default function BankUser({ route, navigation }) {
               </View>
               {selected?.id === item.id ? (
                 <View style={styles.bankCheck}>
-                  <Text style={{ color: "#072015" }}>✓</Text>
+                  <MaterialIcons name="check" size={18} color="#072015" />
                 </View>
               ) : null}
             </TouchableOpacity>
