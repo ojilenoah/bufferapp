@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
+import BottomNav from "../components/BottomNav";
 
 export default function Wallet({ navigation }) {
   return (
@@ -15,6 +16,7 @@ export default function Wallet({ navigation }) {
       <View style={styles.content}>
         <Text style={styles.placeholder}>Wallet details coming soon...</Text>
       </View>
+      <BottomNav />
     </View>
   );
 }

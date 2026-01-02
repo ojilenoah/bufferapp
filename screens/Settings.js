@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import BottomNav from "../components/BottomNav";
 
 export default function Settings({ navigation }) {
   return (
@@ -18,6 +19,7 @@ export default function Settings({ navigation }) {
           <Text style={styles.rowText}>Help & Support</Text>
         </TouchableOpacity>
       </View>
+      <BottomNav />
     </View>
   );
 }
