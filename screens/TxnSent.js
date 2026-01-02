@@ -1,5 +1,11 @@
-import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import React, { useRef, useEffect } from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Animated,
+} from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 
 function formatDate(iso) {
@@ -24,6 +30,25 @@ export default function TxnSent({ route, navigation }) {
     maximumFractionDigits: 2,
   });
 
+  const pulse = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(pulse, {
+          toValue: 1,
+          duration: 600,
+          useNativeDriver: true,
+        }),
+        Animated.timing(pulse, {
+          toValue: 0,
+          duration: 600,
+          useNativeDriver: true,
+        }),
+      ])
+    ).start();
+  }, [pulse]);
+
   return (
     <View style={styles.safe}>
       <View style={styles.headerBar}>
@@ -39,10 +64,38 @@ export default function TxnSent({ route, navigation }) {
 
       <View style={styles.body}>
         <View style={styles.successWrap}>
-          <View style={styles.bgGlow} />
-          <View style={styles.successIcon}>
+          <Animated.View
+            style={[
+              styles.bgGlow,
+              {
+                transform: [
+                  {
+                    scale: pulse.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [1, 1.08],
+                    }),
+                  },
+                ],
+              },
+            ]}
+          />
+          <Animated.View
+            style={[
+              styles.successIcon,
+              {
+                transform: [
+                  {
+                    scale: pulse.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [0.96, 1.06],
+                    }),
+                  },
+                ],
+              },
+            ]}
+          >
             <MaterialIcons name="check" size={48} color="#13ec80" />
-          </View>
+          </Animated.View>
           <Text style={styles.head}>Transfer Successful</Text>
           <Text style={styles.time}>
             {formatDate(time || new Date().toISOString())}
@@ -168,7 +221,7 @@ const styles = StyleSheet.create({
     width: 300,
     height: 200,
     borderRadius: 150,
-    backgroundColor: "rgba(19,236,128,0.06)",
+    backgroundColor: "rgba(255,210,77,0.12)",
     opacity: 0.9,
   },
   successIcon: {
@@ -177,7 +230,7 @@ const styles = StyleSheet.create({
     borderRadius: 55,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "rgba(0,0,0,0.2)",
+    backgroundColor: "rgba(255,210,77,0.08)",
     borderWidth: 1,
     borderColor: "rgba(255,255,255,0.03)",
   },
@@ -188,14 +241,14 @@ const styles = StyleSheet.create({
   amountText: { color: "#fff", fontSize: 44, fontWeight: "800" },
   pill: {
     marginTop: 10,
-    backgroundColor: "rgba(19,236,128,0.06)",
+    backgroundColor: "rgba(255,210,77,0.06)",
     paddingHorizontal: 14,
     paddingVertical: 6,
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: "rgba(19,236,128,0.12)",
+    borderColor: "rgba(255,210,77,0.12)",
   },
-  pillText: { color: "#13ec80", fontWeight: "700" },
+  pillText: { color: "#ffd24d", fontWeight: "700" },
   detailsCard: {
     marginTop: 18,
     backgroundColor: "rgba(255,255,255,0.03)",

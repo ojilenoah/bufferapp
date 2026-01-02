@@ -8,6 +8,7 @@ import {
   ScrollView,
   Image,
   ActivityIndicator,
+  Animated,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 
@@ -73,6 +74,7 @@ export default function SendScreen({ navigation, route }) {
   const [banksLoading, setBanksLoading] = useState(false);
   const [selectedBank, setSelectedBank] = useState(null);
   const accountTimerRef = useRef(null);
+  const spinAnim = useRef(new Animated.Value(0)).current;
 
   const numericUsd = useMemo(() => parseFloat(usd) || 0, [usd]);
   const converted = useMemo(
@@ -136,6 +138,28 @@ export default function SendScreen({ navigation, route }) {
       }
     };
   }, [account]);
+
+  useEffect(() => {
+    let loop;
+    if (banksLoading) {
+      spinAnim.setValue(0);
+      loop = Animated.loop(
+        Animated.timing(spinAnim, {
+          toValue: 1,
+          duration: 900,
+          useNativeDriver: true,
+        })
+      );
+      loop.start();
+    } else {
+      spinAnim.stopAnimation();
+      spinAnim.setValue(0);
+    }
+
+    return () => {
+      if (loop && loop.stop) loop.stop();
+    };
+  }, [banksLoading, spinAnim]);
 
   function handleSend() {
     if (!selectedBank) return;
@@ -314,7 +338,20 @@ export default function SendScreen({ navigation, route }) {
         <View style={{ marginTop: 12 }}>
           {banksLoading ? (
             <View style={styles.bankLoaderRow}>
-              <ActivityIndicator size="small" color="#13ec80" />
+              <Animated.View
+                style={{
+                  transform: [
+                    {
+                      rotate: spinAnim.interpolate({
+                        inputRange: [0, 1],
+                        outputRange: ["0deg", "360deg"],
+                      }),
+                    },
+                  ],
+                }}
+              >
+                <MaterialIcons name="autorenew" size={18} color="#ffd24d" />
+              </Animated.View>
               <Text style={{ color: "rgba(255,255,255,0.8)", marginLeft: 8 }}>
                 Looking up banks...
               </Text>
